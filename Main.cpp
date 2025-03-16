@@ -107,19 +107,16 @@ int PWR_HIGH = 255;
 // Melody and rhythm defined as an array
 // Each note is followed by its duration (4 = quarter note, 8 = eighth note, etc.)
 int melody[] = {
- // Super Mario Bros theme
- // Score available at https://musescore.com/user/2123/scores/2145
- // Theme by Koji Kondo
- NOTE_E5,8, NOTE_E5,8, REST,8, NOTE_E5,8, REST,8, NOTE_C5,8, NOTE_E5,8, //1
- NOTE_G5,4, REST,4, NOTE_G4,8, REST,4,
- NOTE_C5,-4, NOTE_G4,8, REST,4, NOTE_E4,-4, // 3
- NOTE_A4,4, NOTE_B4,4, NOTE_AS4,8, NOTE_A4,4,
- NOTE_G4,-8, NOTE_E5,-8, NOTE_G5,-8, NOTE_A5,4, NOTE_F5,8, NOTE_G5,8,
- REST,8, NOTE_E5,4,NOTE_C5,8, NOTE_D5,8, NOTE_B4,-4,
+ // Highway to Hell
+ // by AC/DC
+ NOTE_A5,4, NOTE_B5,8, NOTE_D6,8, NOTE_B5,8,
+ NOTE_D6,2,
+ NOTE_D6,4, NOTE_B5,8,
+ NOTE_D6,2,
 };
 analogWave wave(DAC); // Initialize the analogWave object for DAC(A0)
 int noteCounter = 0; // Index to keep track of which note is being played
-int tempo = 200; // Set the tempo in BPM (Beats Per Minute)
+int tempo = 120; // Set the tempo in BPM (Beats Per Minute)
 int wholenote = (60000 * 4) / tempo; // Calculate the duration of a whole note in ms
 int divider = 0, noteDuration = 0; // Variables to hold note duration
 
@@ -162,7 +159,7 @@ void loop() {
   Serial.println(mappedVal);
   displayTemp(tempC, mappedVal);
   playMelody();
-  delay(100);
+  //delay(100);
 }
 
 float toCelsius(long reading) {
@@ -209,7 +206,7 @@ void playMelody() {
   // Play the note
   wave.freq(melody[noteCounter]);
   currMillis = millis();
-  if (currMillis - noteStart >= noteDuration * 0.85) {
+  if (currMillis - noteStart >= noteDuration * 0.65) {
     wave.stop();
   }
   /*
